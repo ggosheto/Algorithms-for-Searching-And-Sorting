@@ -45,12 +45,12 @@ namespace AlgZaSortirane_Tursene
             return -1;
         }
 
-        public static int BinarySearchWithRecusrion(int[] array, int value)
+        public static int BinarySearchWithRecursion(int[] array, int value)
         {
-            return BinarySearchWithRecusrion(array, value, 0, array.Length - 1);
+            return BinarySearchWithRecursion(array, value, 0, array.Length - 1);
         }
 
-        private static int BinarySearchWithRecusrion(int[] array, int value, int left, int right)
+        private static int BinarySearchWithRecursion(int[] array, int value, int left, int right)
         {
             if (right >= left)
             {
@@ -61,11 +61,11 @@ namespace AlgZaSortirane_Tursene
                 }
                 if (array[middle] > value)
                 {
-                    return BinarySearchWithRecusrion(array, value, left, middle - 1);
+                    return BinarySearchWithRecursion(array, value, left, middle - 1);
                 }
                 else
                 {
-                    return BinarySearchWithRecusrion(array, value, middle + 1, right);
+                    return BinarySearchWithRecursion(array, value, middle + 1, right);
                 }
             }
 
