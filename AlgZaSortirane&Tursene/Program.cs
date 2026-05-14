@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AlgZaSortirane_Tursene
 {
@@ -6,31 +7,16 @@ namespace AlgZaSortirane_Tursene
     {
         static void Main(string[] args)
         {
-            Console.Write("Array: ");
             int[] array = new[] { 1, 5, 4, 8, 2, 9, 7 };
-
-            foreach (var item in array)
-            {
-                Console.Write(item + ",");
-            }
+            Console.WriteLine("Unsorted Array: " + string.Join(", ", array));
 
             Console.WriteLine();
-            Console.WriteLine();
 
-            //SortingAlgorithms.QuickSort(array,0,array.Length-1);
-            //SortingAlgorithms.MergeSort(array,0,array.Length - 1);
+            //SortingAlgorithms.QuickSortClass.QuickSort(array, 0, array.Length - 1);
+            //SortingAlgorithms.MergeSortClass.MergeSort(array, 0, array.Length - 1);
 
-            SortingAlgorithms.BubbleSort(array);
-            Console.Write("Sorted Array: ");
-            foreach (var item in array)
-            {
-                Console.Write(item + ",");
-            }
-
-            //Console.WriteLine();
-
-            ////Console.WriteLine(SearchingAlgorithms.BinarySearchWithRecusrion(array, 4)); 
-
+            SortingAlgorithms.RadixSortClass.RadixSort(array);
+            Console.WriteLine("Sorted Array: " + string.Join(", ", array));
 
             Console.WriteLine();
             Console.ReadKey();

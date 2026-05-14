@@ -62,7 +62,7 @@ namespace AlgZaSortirane_Tursene
                 array[minIndex] = array[i];
                 array[i] = swap;
             }
-                
+
         }
 
         public static int[] InsertionSort(int[] array)
@@ -119,91 +119,153 @@ namespace AlgZaSortirane_Tursene
             return output;
         }
 
-        public static void QuickSort(int[] array, int low, int high)
+        public class QuickSortClass
         {
-            if (low < high)
+            public static void QuickSort(int[] array, int low, int high)
             {
-                int pivotIndex = Partition(array, low, high);
-                QuickSort(array, low, pivotIndex - 1);
-                QuickSort(array, pivotIndex + 1, high);
-            }
-        }
-
-        private static int Partition(int[] array, int low, int high) // // Method inheriated by QuickSort
-        {
-            int pivot = array[high];
-            Console.WriteLine($"Chosen PIVOT: {pivot} (on position {high})");
-            int i = low - 1;
-
-            for (int j = low; j < high; j++)
-            {
-                if (array[j] < pivot)
+                if (low < high)
                 {
-                    i++;
-                    Swap(array, i, j);
+                    int pivotIndex = Partition(array, low, high);
+                    QuickSort(array, low, pivotIndex - 1);
+                    QuickSort(array, pivotIndex + 1, high);
                 }
             }
-            Swap(array, i + 1, high);
-            return i + 1;
-        }
 
-        private static void Swap(int[] array, int a, int b) // Method inheriated by QuickSort
-        {
-            int temp = array[a];
-            array[a] = array[b];
-            array[b] = temp;
-        }
-
-        public static void MergeSort(int[] array, int left, int right) // Method Inheriated by MergeSort
-        {
-            if (left < right)
+            private static int Partition(int[] array, int low, int high) // // Method inheriated by QuickSort
             {
-                int mid = left + (right - left) / 2;
-                MergeSort(array, left, mid);
-                MergeSort(array, mid + 1, right);
-                Merge(array, left, mid, right);
-            }
-        }
+                int pivot = array[high];
+                Console.WriteLine($"Chosen PIVOT: {pivot} (on position {high})");
+                int i = low - 1;
 
-        private static void Merge(int[] array, int left, int mid, int right) // Method Inheriated by MergeSort
-        {
-            int n1 = mid - left + 1;
-            int n2 = right - mid;
-
-            int[] leftTemp = new int[n1];
-            int[] rightTemp = new int[n2];
-
-            Array.Copy(array, left, leftTemp, 0, n1);
-            Array.Copy(array, mid + 1, rightTemp, 0, n2);
-
-            int i = 0;
-            int j = 0;
-            int k = left;
-
-            while (i < n1 && j < n2)
-            {
-                if (leftTemp[i] < rightTemp[j])
+                for (int j = low; j < high; j++)
                 {
-                    array[k] = leftTemp[i];
-                    i++;
+                    if (array[j] < pivot)
+                    {
+                        i++;
+                        Swap(array, i, j);
+                    }
                 }
-                else
+                Swap(array, i + 1, high);
+                return i + 1;
+            }
+
+            private static void Swap(int[] array, int a, int b) // Method inheriated by QuickSort
+            {
+                int temp = array[a];
+                array[a] = array[b];
+                array[b] = temp;
+            }
+        }
+
+        public class MergeSortClass
+        {
+            public static void MergeSort(int[] array, int left, int right) // Method Inheriated by MergeSort
+            {
+                if (left < right)
                 {
-                    array[k] = rightTemp[j];
-                    j++;
+                    int mid = left + (right - left) / 2;
+                    MergeSort(array, left, mid);
+                    MergeSort(array, mid + 1, right);
+                    Merge(array, left, mid, right);
                 }
-                k++;
             }
 
-            while (i < n1)
+            private static void Merge(int[] array, int left, int mid, int right) // Method Inheriated by MergeSort
             {
-                array[k++] = leftTemp[i++];
+                int n1 = mid - left + 1;
+                int n2 = right - mid;
+
+                int[] leftTemp = new int[n1];
+                int[] rightTemp = new int[n2];
+
+                Array.Copy(array, left, leftTemp, 0, n1);
+                Array.Copy(array, mid + 1, rightTemp, 0, n2);
+
+                int i = 0;
+                int j = 0;
+                int k = left;
+
+                while (i < n1 && j < n2)
+                {
+                    if (leftTemp[i] < rightTemp[j])
+                    {
+                        array[k] = leftTemp[i];
+                        i++;
+                    }
+                    else
+                    {
+                        array[k] = rightTemp[j];
+                        j++;
+                    }
+                    k++;
+                }
+
+                while (i < n1)
+                {
+                    array[k++] = leftTemp[i++];
+                }
+
+                while (j < n2)
+                {
+                    array[k++] = rightTemp[j++];
+                }
+            }
+        }
+
+        public class RadixSortClass
+        {
+            public static void RadixSort(int[] arr)
+            {
+                if (arr.Length == 0) return;
+
+                int max = GetMax(arr);
+
+                for (int exp = 1; max / exp > 0; exp *= 10)
+                {
+                    CountSortByDigit(arr, exp);
+                }
             }
 
-            while (j < n2)
+            private static void CountSortByDigit(int[] arr, int exp)
             {
-                array[k++] = rightTemp[j++];
+                int n = arr.Length;
+                int[] output = new int[n];
+                int[] count = new int[10];
+
+                for (int i = 0; i < n; i++)
+                {
+                    count[(arr[i] / exp) % 10]++;
+                }
+
+                for (int i = 1; i < 10; i++)
+                {
+                    count[i] += count[i - 1];
+                }
+
+                for (int i = n - 1; i >= 0; i--)
+                {
+                    int digit = (arr[i] / exp) % 10;
+                    output[count[digit] - 1] = arr[i];
+                    count[digit]--;
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    arr[i] = output[i];
+                }
             }
+
+            private static int GetMax(int[] arr)
+            {
+                int max = arr[0];
+                for (int i = 1; i < arr.Length; i++)
+                {
+                    if (arr[i] > max) max = arr[i];
+                }
+                return max;
+            }
+
         }
     }
+
 }
