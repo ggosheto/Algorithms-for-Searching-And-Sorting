@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace AlgZaSortirane_Tursene
@@ -116,6 +117,93 @@ namespace AlgZaSortirane_Tursene
             }
 
             return output;
+        }
+
+        public static void QuickSort(int[] array, int low, int high)
+        {
+            if (low < high)
+            {
+                int pivotIndex = Partition(array, low, high);
+                QuickSort(array, low, pivotIndex - 1);
+                QuickSort(array, pivotIndex + 1, high);
+            }
+        }
+
+        private static int Partition(int[] array, int low, int high) // // Method inheriated by QuickSort
+        {
+            int pivot = array[high];
+            Console.WriteLine($"Chosen PIVOT: {pivot} (on position {high})");
+            int i = low - 1;
+
+            for (int j = low; j < high; j++)
+            {
+                if (array[j] < pivot)
+                {
+                    i++;
+                    Swap(array, i, j);
+                }
+            }
+            Swap(array, i + 1, high);
+            return i + 1;
+        }
+
+        private static void Swap(int[] array, int a, int b) // Method inheriated by QuickSort
+        {
+            int temp = array[a];
+            array[a] = array[b];
+            array[b] = temp;
+        }
+
+        public static void MergeSort(int[] array, int left, int right) // Method Inheriated by MergeSort
+        {
+            if (left < right)
+            {
+                int mid = left + (right - left) / 2;
+                MergeSort(array, left, mid);
+                MergeSort(array, mid + 1, right);
+                Merge(array, left, mid, right);
+            }
+        }
+
+        private static void Merge(int[] array, int left, int mid, int right) // Method Inheriated by MergeSort
+        {
+            int n1 = mid - left + 1;
+            int n2 = right - mid;
+
+            int[] leftTemp = new int[n1];
+            int[] rightTemp = new int[n2];
+
+            Array.Copy(array, left, leftTemp, 0, n1);
+            Array.Copy(array, mid + 1, rightTemp, 0, n2);
+
+            int i = 0;
+            int j = 0;
+            int k = left;
+
+            while (i < n1 && j < n2)
+            {
+                if (leftTemp[i] < rightTemp[j])
+                {
+                    array[k] = leftTemp[i];
+                    i++;
+                }
+                else
+                {
+                    array[k] = rightTemp[j];
+                    j++;
+                }
+                k++;
+            }
+
+            while (i < n1)
+            {
+                array[k++] = leftTemp[i++];
+            }
+
+            while (j < n2)
+            {
+                array[k++] = rightTemp[j++];
+            }
         }
     }
 }

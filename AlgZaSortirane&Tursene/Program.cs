@@ -16,8 +16,11 @@ namespace AlgZaSortirane_Tursene
 
             Console.WriteLine();
             Console.WriteLine();
-            
-            SortingAlgorithms.CountingSort(array);
+
+            //SortingAlgorithms.QuickSort(array,0,array.Length-1);
+            //SortingAlgorithms.MergeSort(array,0,array.Length - 1);
+
+            SortingAlgorithms.BubbleSort(array);
             Console.Write("Sorted Array: ");
             foreach (var item in array)
             {
